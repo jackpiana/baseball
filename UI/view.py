@@ -25,6 +25,7 @@ class View(ft.UserControl):
         # self._page.controls.append(self._title)
 
         self._ddAnno = ft.Dropdown(label="Anno", width=200, alignment=ft.alignment.top_left)
+        self._controller.fill_dropdownAnni()
 
         row1 = ft.Row([ft.Container(self._title, width=500),
                        ft.Container(None, width=0),
@@ -45,8 +46,6 @@ class View(ft.UserControl):
         self._page.controls.append(row2)
         self._page.controls.append(row3)
 
-        for i in range(0,200):
-            self._txtOutSquadre.controls.append(ft.Text(f"Squadra {i}"))
 
         self._txt_result = ft.ListView(expand=1, spacing=10, padding=20, auto_scroll=True)
         self._page.controls.append(ft.Container(self._txt_result, bgcolor="#deeded", height=350))
@@ -64,4 +63,22 @@ class View(ft.UserControl):
         self._controller = controller
 
     def update_page(self):
+        self._page.update()
+
+
+    def show_loading_bar(self):
+        # progress bar
+        progress_loading = ft.ProgressBar(width=400,
+                                          height=20,
+                                          color="blue",
+                                          bgcolor="#eeeeee")
+
+        self.row_loadingBar = ft.Row([progress_loading],
+                      alignment=ft.MainAxisAlignment.CENTER)
+
+        self._page.controls.append(self.row_loadingBar)
+        self._page.update()
+
+    def remove_loading_bar(self):
+        self._page.controls.remove(self.row_loadingBar)
         self._page.update()
